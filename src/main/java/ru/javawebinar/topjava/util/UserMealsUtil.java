@@ -29,8 +29,8 @@ public class UserMealsUtil {
 
     //With stream api
     public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        Map<LocalDate, Integer> eatenCaloriesMap = new HashMap<>();
-        mealList.forEach(n -> eatenCaloriesMap.merge(n.getDateTime().toLocalDate(), n.getCalories(), Integer::sum));
+        Map<LocalDate, Integer> eatenCaloriesMap = mealList.stream()
+                .collect(Collectors.toMap(n -> n.getDateTime().toLocalDate(), UserMeal::getCalories, Integer::sum));
 
         return mealList.stream()
                 .filter(n -> TimeUtil.isBetween(n.getDateTime().toLocalTime(), startTime, endTime))
@@ -42,15 +42,11 @@ public class UserMealsUtil {
     //With 'for'
     public static List<UserMealWithExceed> getFilteredWithExceeded2(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         Map<LocalDate, Integer> eatenCaloriesMap = new HashMap<>();
-        for (UserMeal meal : mealList) {
-            eatenCaloriesMap.put(meal.getDateTime().toLocalDate(),
-                    eatenCaloriesMap.getOrDefault(meal.getDateTime().toLocalDate(), 0) + meal.getCalories());
-        }
+        mealList.forEach(n -> eatenCaloriesMap.merge(n.getDateTime().toLocalDate(), n.getCalories(), Integer::sum));
 
         List<UserMealWithExceed> result = new ArrayList<>();
         for (UserMeal meal : mealList) {
-            if (meal.getDateTime().toLocalTime().compareTo(startTime) >= 0
-                    && meal.getDateTime().toLocalTime().compareTo(endTime) <= 0) {
+            if (TimeUtil.isBetween(meal.getDateTime().toLocalTime(), startTime, endTime)) {
                 result.add(new UserMealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(),
                         eatenCaloriesMap.get(meal.getDateTime().toLocalDate()) > caloriesPerDay));
             }
