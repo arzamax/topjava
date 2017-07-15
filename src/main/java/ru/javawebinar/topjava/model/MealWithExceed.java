@@ -1,7 +1,6 @@
 package ru.javawebinar.topjava.model;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class MealWithExceed {
     private final int id;
@@ -28,10 +27,6 @@ public class MealWithExceed {
 
     public LocalDateTime getDateTime() {
         return dateTime;
-    }
-
-    public String getDateTimeAsString() {
-        return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 
     public String getDescription() {

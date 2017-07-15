@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="ru.javawebinar.topjava.util.MealsUtil" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -15,7 +16,7 @@
     </tr>
     <c:forEach items="${meals}" var="meal">
         <tr id="rowMain${meal.getId()}" class="${meal.isExceed() ? 'red' : 'green'}">
-            <td class="wide">${meal.getDateTimeAsString()}</td>
+            <td class="wide">${MealsUtil.getDateTimeAsString(meal.getDateTime())}</td>
             <td class="wide">${meal.getDescription()}</td>
             <td class="wide">${meal.getCalories()}</td>
             <td>
