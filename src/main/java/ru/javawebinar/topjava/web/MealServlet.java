@@ -9,14 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class UserServlet extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(UserServlet.class);
+
+/**
+ * Created by shuto on 15.07.2017.
+ */
+public class MealServlet extends HttpServlet {
+    private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        log.debug("dispatch to users");
+        log.debug("dispatch to meals");
 
-        request.getRequestDispatcher("/users.jsp").forward(request, response);
-//        response.sendRedirect("users.jsp");
+        request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
 }
