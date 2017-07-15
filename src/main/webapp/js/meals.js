@@ -1,6 +1,3 @@
-/**
- * Created by shuto on 15.07.2017.
- */
 function showEditing(id) {
     document.getElementById("rowMain" + id).setAttribute("hidden", true);
     document.getElementById("rowEdit" + id).removeAttribute("hidden");

@@ -7,16 +7,11 @@ import ru.javawebinar.topjava.util.MealsUtil;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * Created by shuto on 15.07.2017.
- */
 public class CrudServiceImpl implements CrudService {
     private static final int CALORIES_PER_DAY = 2000;
 

@@ -13,10 +13,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-
-/**
- * Created by shuto on 15.07.2017.
- */
 public class MealServlet extends HttpServlet {
     private static final String DELETE_URL = "/deleteMeal";
     private static final String EDIT_URL = "/editMeal";
