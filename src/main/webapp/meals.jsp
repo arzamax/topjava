@@ -28,12 +28,13 @@
             <td>
                 <button onclick="showEditing(${meal.getId()})">Редактировать</button>
             </td>
-            <td>
-                <button>Удалить</button>
-            </td>
+            <form action="deleteMeal" method="post">
+                <td hidden="hidden"><input name="id" type="text" value="${meal.getId()}"></td>
+                <td><input type="submit" value="Удалить"></td>
+            </form>
         </tr>
         <tr id="rowEdit${meal.getId()}" hidden="hidden">
-            <form action="" method="post">
+            <form action="editMeal" method="post">
                 <td hidden="hidden"><input type="text" name="id" value="${meal.getId()}"></td>
                 <td class="wide"><input type="datetime-local" name="dateTime" value="${meal.getDateTime()}"></td>
                 <td class="wide"><input type="text" name="description" value="${meal.getDescription()}"></td>
@@ -45,11 +46,11 @@
             </td>
         </tr>
     </c:forEach>
-    <form method="post">
+    <form action="addMeal" method="post">
         <tr>
-            <td class="wide"><input type="datetime-local" placeholder="Дата/Время"></td>
-            <td class="wide"><input type="text" placeholder="Описание"></td>
-            <td class="wide"><input type="text" placeholder="Калории"></td>
+            <td class="wide"><input type="datetime-local" name="dateTime" placeholder="Дата/Время"></td>
+            <td class="wide"><input type="text" name="description" placeholder="Описание"></td>
+            <td class="wide"><input type="text" name="calories" placeholder="Калории"></td>
             <td><input type="submit" value="Добавить"></td>
         </tr>
     </form>

@@ -16,3 +16,8 @@ td {
 button, input[type=submit] {
     width: 110px;
 }
+
+/*
+input[name=id] {
+    visibility: hidden;
+}*/

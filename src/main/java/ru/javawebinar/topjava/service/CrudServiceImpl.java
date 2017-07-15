@@ -37,6 +37,19 @@ public class CrudServiceImpl implements CrudService {
         return MealsUtil.getFilteredWithExceeded(meals.values(), startTime, endTime, CALORIES_PER_DAY);
     }
 
+    @Override
+    public void deleteMeal(int id) {
+        meals.remove(id);
+    }
 
+    @Override
+    public void addMeal(LocalDateTime dateTime, String description, int calories) {
+        int id = idCounter.getAndIncrement();
+        meals.put(id, new Meal(id, dateTime, description, calories));
+    }
 
+    @Override
+    public void editMeal(int id, LocalDateTime dateTime, String description, int calories) {
+        meals.put(id, new Meal(id, dateTime, description, calories));
+    }
 }
