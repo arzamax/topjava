@@ -1,0 +1,18 @@
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.wide {
+    width: 200px;
+}
+td {
+    height: 26px;
+}
+
+button, input[type=submit] {
+    width: 110px;
+}
