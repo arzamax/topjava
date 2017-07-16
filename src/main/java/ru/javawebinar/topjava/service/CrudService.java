@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.service;
 
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealWithExceed;
 
 import java.time.LocalDateTime;
@@ -17,4 +18,6 @@ public interface CrudService {
     void addMeal(LocalDateTime dateTime, String description, int calories);
 
     void editMeal(int id, LocalDateTime dateTime, String description, int calories);
+
+    Meal getMeal(int id);
 }

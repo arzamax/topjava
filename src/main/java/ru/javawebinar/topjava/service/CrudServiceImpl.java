@@ -40,6 +40,11 @@ public class CrudServiceImpl implements CrudService {
     }
 
     @Override
+    public Meal getMeal(int id) {
+        return meals.get(id);
+    }
+
+    @Override
     public void deleteMeal(int id) {
         meals.remove(id);
     }
