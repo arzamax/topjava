@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="ru.javawebinar.topjava.util.MealsUtil" %>
+<%@ page import="ru.javawebinar.topjava.util.TimeUtil" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -16,7 +16,7 @@
     </tr>
     <c:forEach items="${meals}" var="meal">
         <tr id="rowMain${meal.getId()}" class="${meal.isExceed() ? 'red' : 'green'}">
-            <td class="wide">${MealsUtil.getDateTimeAsString(meal.getDateTime())}</td>
+            <td class="wide">${TimeUtil.getDateTimeAsString(meal.getDateTime())}</td>
             <td class="wide">${meal.getDescription()}</td>
             <td class="wide">${meal.getCalories()}</td>
             <td>
@@ -32,7 +32,7 @@
                 <td hidden="hidden"><input type="text" name="id" value="${meal.getId()}"></td>
                 <td class="wide"><input type="datetime-local" name="dateTime" value="${meal.getDateTime()}"></td>
                 <td class="wide"><input type="text" name="description" value="${meal.getDescription()}"></td>
-                <td class="wide"><input type="text" name="calories" value="${meal.getCalories()}"></td>
+                <td class="wide"><input type="number" name="calories" value="${meal.getCalories()}"></td>
                 <td><input type="submit" value="Сохранить"></td>
             </form>
             <td>
@@ -44,7 +44,7 @@
         <tr>
             <td class="wide"><input type="datetime-local" name="dateTime" placeholder="Дата/Время"></td>
             <td class="wide"><input type="text" name="description" placeholder="Описание"></td>
-            <td class="wide"><input type="text" name="calories" placeholder="Калории"></td>
+            <td class="wide"><input type="number" name="calories" placeholder="Калории"></td>
             <td><input type="submit" value="Добавить"></td>
         </tr>
     </form>

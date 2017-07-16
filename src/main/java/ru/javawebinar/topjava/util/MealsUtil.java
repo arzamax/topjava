@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 public class MealsUtil {
     private static final Logger log = LoggerFactory.getLogger(MealsUtil.class);
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public static List<MealWithExceed> getFilteredWithExceeded(Collection<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         log.debug("getting MealWithExceed list");
@@ -46,9 +45,5 @@ public class MealsUtil {
 
     public static MealWithExceed createWithExceed(Meal meal, boolean exceeded) {
         return new MealWithExceed(meal.getId(), meal.getDateTime(), meal.getDescription(), meal.getCalories(), exceeded);
-    }
-
-    public static String getDateTimeAsString(LocalDateTime dateTime) {
-        return dateTime.format(formatter);
     }
 }
