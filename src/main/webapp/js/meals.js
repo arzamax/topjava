@@ -1,11 +1,13 @@
-var HIDDEN_STR = "hidden";
-
 function showEditing(id) {
-    document.getElementById("rowMain" + id).setAttribute(HIDDEN_STR, HIDDEN_STR);
-    document.getElementById("rowEdit" + id).removeAttribute(HIDDEN_STR);
+    document.getElementById("id").value = id;
+    document.getElementById("dateTime").value =
+        document.getElementById("Id" + id + "dateTime").innerHTML.replace(" ", "T");
+    document.getElementById("description").value = document.getElementById("Id" + id + "description").innerHTML;
+    document.getElementById("calories").value = document.getElementById("Id" + id + "calories").innerHTML;
+
+    document.getElementById("editingForm").classList.remove("hidden");
 }
 
-function hideEditing(id) {
-    document.getElementById("rowMain" + id).removeAttribute(HIDDEN_STR);
-    document.getElementById("rowEdit" + id).setAttribute(HIDDEN_STR, HIDDEN_STR);
+function hideEditing() {
+    document.getElementById("editingForm").classList.add("hidden");
 }

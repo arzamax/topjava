@@ -8,47 +8,54 @@
     <title>Meals</title>
 </head>
 <body>
-<table>
-    <tr>
-        <td>Дата/Время</td>
-        <td>Описание</td>
-        <td>Калории</td>
-    </tr>
+<div class="table">
+    <div class="tr">
+        <span class="td">Дата/Время</span>
+        <span class="td">Описание</span>
+        <span class="td">Калории</span>
+    </div>
     <c:forEach items="${meals}" var="meal">
-        <tr id="rowMain${meal.getId()}" class="${meal.isExceed() ? 'red' : 'green'}">
-            <td class="wide">${TimeUtil.getDateTimeAsString(meal.getDateTime())}</td>
-            <td class="wide">${meal.getDescription()}</td>
-            <td class="wide">${meal.getCalories()}</td>
-            <td>
+        <div class="tr ${meal.isExceed() ? 'red' : 'green'}">
+            <span id="Id${meal.getId()}dateTime" class="td wide">${TimeUtil.getDateTimeAsString(meal.getDateTime())}</span>
+            <span id="Id${meal.getId()}description" class="td wide">${meal.getDescription()}</span>
+            <span id="Id${meal.getId()}calories" class="td wide">${meal.getCalories()}</span>
+            <span class="td">
                 <button onclick="showEditing(${meal.getId()})">Редактировать</button>
-            </td>
+            </span>
             <form action="deleteMeal" method="post">
-                <td hidden="hidden"><input name="id" type="text" value="${meal.getId()}"></td>
-                <td><input type="submit" value="Удалить"></td>
+                <span class="hidden"><input name="id" type="text" value="${meal.getId()}"></span>
+                <span class="td"><input type="submit" value="Удалить"></span>
             </form>
-        </tr>
-        <tr id="rowEdit${meal.getId()}" hidden="hidden">
-            <form action="editMeal" method="post">
-                <td hidden="hidden"><input type="text" name="id" value="${meal.getId()}"></td>
-                <td class="wide"><input type="datetime-local" name="dateTime" value="${meal.getDateTime()}"></td>
-                <td class="wide"><input type="text" name="description" value="${meal.getDescription()}"></td>
-                <td class="wide"><input type="number" name="calories" value="${meal.getCalories()}"></td>
-                <td><input type="submit" value="Сохранить"></td>
-            </form>
-            <td>
-                <button onclick="hideEditing(${meal.getId()})">Отмена</button>
-            </td>
-        </tr>
+        </div>
     </c:forEach>
-    <form action="addMeal" method="post">
-        <tr>
-            <td class="wide"><input type="datetime-local" name="dateTime" placeholder="Дата/Время"></td>
-            <td class="wide"><input type="text" name="description" placeholder="Описание"></td>
-            <td class="wide"><input type="number" name="calories" placeholder="Калории"></td>
-            <td><input type="submit" value="Добавить"></td>
-        </tr>
+    <form class="tr" action="addMeal" method="post">
+        <span class="td wide"><input type="datetime-local" name="dateTime" placeholder="Дата/Время"></span>
+        <span class="td wide"><input type="text" name="description" placeholder="Описание"></span>
+        <span class="td wide"><input type="number" name="calories" placeholder="Калории"></span>
+        <span class="td"><input type="submit" value="Добавить"></span>
     </form>
-</table>
-
+</div>
+<br/>
+<div id="editingForm" class="hidden">
+    <form action="editMeal" method="post" class="table">
+        <input class="hidden" type="number" id="id" name="id" placeholder="id">
+        <div class="tr">
+            <span class="td"><label for="dateTime">Дата/Время</label></span>
+            <span class="td"><input id="dateTime" type="datetime-local" name="dateTime"></span>
+        </div>
+        <div class="tr">
+            <span class="td"><label for="description">Описание</label></span>
+            <span class="td"><input id="description" type="text" name="description"></span>
+        </div>
+        <div class="tr">
+            <span class="td"><label for="calories">Калории</label></span>
+            <span class="td"><input id="calories" type="number" name="calories"></span>
+        </div>
+        <div class="tr">
+            <span class="td"><input type="submit" value="Сохранить"></span>
+            <span class="td"><button type="reset" onclick="hideEditing()">Отмена</button></span>
+        </div>
+    </form>
+</div>
 </body>
 </html>

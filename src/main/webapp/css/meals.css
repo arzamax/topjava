@@ -9,10 +9,23 @@
 .wide {
     width: 200px;
 }
-td {
-    height: 26px;
+
+/*button, input[type=submit] {
+    width: 110px;
+}*/
+
+.table {
+    display: table;
 }
 
-button, input[type=submit] {
-    width: 110px;
+form.tr, div.tr {
+    display: table-row;
+}
+
+span.td {
+    display: table-cell;
+}
+
+.hidden {
+    display: none;
 }
