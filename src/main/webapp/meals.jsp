@@ -8,6 +8,7 @@
     <title>Meals</title>
 </head>
 <body>
+<h3><a href="index.html">Home</a></h3>
 <div class="table">
     <div class="tr">
         <span class="td">Дата/Время</span>
