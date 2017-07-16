@@ -24,12 +24,19 @@ public class MealServlet extends HttpServlet {
 
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
 
-    private CrudService crudService = new CrudServiceImpl();
+    private CrudService crudService;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        crudService = new CrudServiceImpl();
+        crudService.initTestData();
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("dispatch to meals");
-        request.setAttribute("meals", crudService.getMeals(LocalTime.MIN, LocalTime.MAX));
+        request.setAttribute("meals", crudService.getMeals());
         request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
 

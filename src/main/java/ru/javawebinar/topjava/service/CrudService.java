@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface CrudService {
 
-    List<MealWithExceed> getMeals(LocalTime startTime, LocalTime endTime);
+    void initTestData();
+
+    List<MealWithExceed> getMeals();
 
     void deleteMeal(int id);
 
