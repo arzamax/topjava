@@ -7,7 +7,7 @@
 <body>
 <div>
     <form action="meals?action=edit" method="post" class="table">
-        <input class="hidden" type="number" id="id" name="id" placeholder="id" value="${meal.getId()}">
+        <input type="hidden" id="id" name="id" placeholder="id" value="${meal.getId()}">
         <div class="tr">
             <span class="td"><label for="dateTime">Дата/Время</label></span>
             <span class="td"><input id="dateTime" type="datetime-local" name="dateTime"
