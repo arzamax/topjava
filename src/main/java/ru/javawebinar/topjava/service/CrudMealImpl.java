@@ -12,19 +12,17 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class CrudServiceImpl implements CrudService {
+public class CrudMealImpl implements CrudMeal {
     private static final int CALORIES_PER_DAY = 2000;
 
-    private AtomicInteger idCounter;
-    private Map<Integer, Meal> meals;
+    private AtomicInteger idCounter = new AtomicInteger();
+    private Map<Integer, Meal> meals = new ConcurrentHashMap<>();
 
-    public CrudServiceImpl() {
-        meals = new ConcurrentHashMap<>();
-        idCounter = new AtomicInteger();
+    public CrudMealImpl() {
+        initTestData();
     }
 
-    @Override
-    public void initTestData() {
+    private void initTestData() {
         meals.put(0, new Meal(0, LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500));
         meals.put(1, new Meal(1, LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000));
         meals.put(2, new Meal(2, LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 500));

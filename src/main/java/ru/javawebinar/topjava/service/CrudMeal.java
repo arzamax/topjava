@@ -7,9 +7,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-public interface CrudService {
-
-    void initTestData();
+public interface CrudMeal {
 
     List<MealWithExceed> getMeals();
 
