@@ -24,7 +24,7 @@
         </div>
         <div class="tr">
             <span class="td"><input type="submit" value="Сохранить"></span>
-            <span class="td"><button type="reset" onclick="hideEditing()">Отмена</button></span>
+            <span class="td"><a href="meals">Отмена</a></span>
         </div>
     </form>
 </div>
