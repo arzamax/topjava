@@ -13,9 +13,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class MealServlet extends HttpServlet {
-    private static final String DELETE_STR = "delete";
-    private static final String EDIT_STR = "edit";
-    private static final String ADD_STR = "add";
     private static final String PARAM_ID = "id";
     private static final String PARAM_DATETIME = "dateTime";
     private static final String PARAM_DESCRIPTION = "description";
@@ -27,9 +24,9 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        log.debug("dispatch to meals");
+        log.debug("forward to meals");
         String action = request.getParameter("action");
-        if (action != null && action.equals(EDIT_STR)) {
+        if (action != null && action.equals("edit")) {
             request.setAttribute("meal", crudMeal.getMeal(Integer.parseInt(request.getParameter(PARAM_ID))));
             request.getRequestDispatcher("/editMeal.jsp").forward(request, response);
         } else {
@@ -44,16 +41,16 @@ public class MealServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         switch (action) {
-            case DELETE_STR:
+            case "delete":
                 crudMeal.deleteMeal(Integer.parseInt(request.getParameter(PARAM_ID)));
                 break;
-            case EDIT_STR:
+            case "edit":
                 crudMeal.editMeal(Integer.parseInt(request.getParameter(PARAM_ID)),
                         LocalDateTime.parse(request.getParameter(PARAM_DATETIME)),
                         request.getParameter(PARAM_DESCRIPTION),
                         Integer.parseInt(request.getParameter(PARAM_CALORIES)));
                 break;
-            case ADD_STR:
+            case "add":
                 crudMeal.addMeal(LocalDateTime.parse(request.getParameter(PARAM_DATETIME)),
                         request.getParameter(PARAM_DESCRIPTION),
                         Integer.parseInt(request.getParameter(PARAM_CALORIES)));
