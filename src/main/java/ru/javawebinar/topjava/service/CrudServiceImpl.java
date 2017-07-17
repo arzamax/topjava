@@ -40,8 +40,9 @@ public class CrudServiceImpl implements CrudService {
     }
 
     @Override
-    public Meal getMeal(int id) {
-        return meals.get(id);
+    public MealWithExceed getMeal(int id) {
+        //поле exceed не важно. просто создаю transfer object
+        return MealsUtil.createWithExceed(meals.get(id), false);
     }
 
     @Override

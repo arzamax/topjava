@@ -4,7 +4,6 @@
 <html>
 <head>
     <link href="css/meals.css" rel="stylesheet"/>
-    <script type="text/javascript" src="js/meals.js"></script>
     <title>Meals</title>
 </head>
 <body>
@@ -21,7 +20,7 @@
             <span id="Id${meal.getId()}description" class="td wide">${meal.getDescription()}</span>
             <span id="Id${meal.getId()}calories" class="td wide">${meal.getCalories()}</span>
             <span class="td">
-                <button onclick="showEditing(${meal.getId()})">Редактировать</button>
+                <a href="meals?action=edit&id=${meal.getId()}">Редактировать</a>
             </span>
             <form action="meals?action=delete" method="post">
                 <span class="hidden"><input name="id" type="text" value="${meal.getId()}"></span>
@@ -34,28 +33,6 @@
         <span class="td wide"><input type="text" name="description" placeholder="Описание"></span>
         <span class="td wide"><input type="number" name="calories" placeholder="Калории"></span>
         <span class="td"><input type="submit" value="Добавить"></span>
-    </form>
-</div>
-<br/>
-<div id="editingForm" class="hidden">
-    <form action="meals?action=edit" method="post" class="table">
-        <input class="hidden" type="number" id="id" name="id" placeholder="id">
-        <div class="tr">
-            <span class="td"><label for="dateTime">Дата/Время</label></span>
-            <span class="td"><input id="dateTime" type="datetime-local" name="dateTime"></span>
-        </div>
-        <div class="tr">
-            <span class="td"><label for="description">Описание</label></span>
-            <span class="td"><input id="description" type="text" name="description"></span>
-        </div>
-        <div class="tr">
-            <span class="td"><label for="calories">Калории</label></span>
-            <span class="td"><input id="calories" type="number" name="calories"></span>
-        </div>
-        <div class="tr">
-            <span class="td"><input type="submit" value="Сохранить"></span>
-            <span class="td"><button type="reset" onclick="hideEditing()">Отмена</button></span>
-        </div>
     </form>
 </div>
 </body>

@@ -36,8 +36,14 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("dispatch to meals");
-        request.setAttribute("meals", crudService.getMeals());
-        request.getRequestDispatcher("/meals.jsp").forward(request, response);
+        String action = request.getParameter("action");
+        if (action != null && action.equals(EDIT_STR)) {
+            request.setAttribute("meal", crudService.getMeal(Integer.parseInt(request.getParameter(PARAM_ID))));
+            request.getRequestDispatcher("/editMeal.jsp").forward(request, response);
+        } else {
+            request.setAttribute("meals", crudService.getMeals());
+            request.getRequestDispatcher("/meals.jsp").forward(request, response);
+        }
     }
 
     @Override

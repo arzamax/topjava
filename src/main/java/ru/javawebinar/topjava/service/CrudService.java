@@ -19,5 +19,5 @@ public interface CrudService {
 
     void editMeal(int id, LocalDateTime dateTime, String description, int calories);
 
-    Meal getMeal(int id);
+    MealWithExceed getMeal(int id);
 }
