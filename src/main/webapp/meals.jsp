@@ -16,15 +16,18 @@
     </div>
     <c:forEach items="${meals}" var="meal">
         <div class="tr ${meal.isExceed() ? 'red' : 'green'}">
-            <span id="Id${meal.getId()}dateTime" class="td wide">${TimeUtil.getDateTimeAsString(meal.getDateTime())}</span>
+            <span id="Id${meal.getId()}dateTime"
+                  class="td wide">${TimeUtil.getDateTimeAsString(meal.getDateTime())}</span>
             <span id="Id${meal.getId()}description" class="td wide">${meal.getDescription()}</span>
             <span id="Id${meal.getId()}calories" class="td wide">${meal.getCalories()}</span>
-            <span class="td">
-                <a href="meals?action=edit&id=${meal.getId()}">Редактировать</a>
-            </span>
-            <form action="meals?action=delete" method="post">
-                <span class="hidden"><input name="id" type="text" value="${meal.getId()}"></span>
-                <span class="td"><input type="submit" value="Удалить"></span>
+            <form action="meals" method="get" class="td">
+                <input name="id" type="hidden" value="${meal.getId()}">
+                <input name="action" type="hidden" value="edit">
+                <input type="submit" value="Редактировать">
+            </form>
+            <form action="meals?action=delete" method="post" class="td">
+                <input name="id" type="hidden" value="${meal.getId()}">
+                <input type="submit" value="Удалить">
             </form>
         </div>
     </c:forEach>

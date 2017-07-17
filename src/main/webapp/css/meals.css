@@ -18,12 +18,13 @@
     display: table;
 }
 
-form.tr, div.tr {
+.tr {
     display: table-row;
 }
 
-span.td {
+.td {
     display: table-cell;
+    padding-top: 10px;
 }
 
 .hidden {
