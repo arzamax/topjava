@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -77,9 +78,13 @@ public class MealServlet extends HttpServlet {
                 break;
             case "all":
             default:
-                log.info("getAll");
+                log.info("getAll with dateTime filter");
+                LocalDate startDate = getDate(request, "startDate");
+                LocalDate endDate = getDate(request, "endDate");
+                LocalTime startTime = getTime(request, "startTime");
+                LocalTime endTime = getTime(request, "endTime");
                 request.setAttribute("meals",
-                        controller.getAll(LocalTime.MIN, LocalTime.MAX));
+                        controller.getAll(startDate, endDate, startTime, endTime));
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
         }
@@ -88,5 +93,15 @@ public class MealServlet extends HttpServlet {
     private int getId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
         return Integer.valueOf(paramId);
+    }
+
+    private LocalDate getDate(HttpServletRequest request, String paramName) {
+        String dateString = request.getParameter(paramName);
+        return (dateString == null || dateString.isEmpty()) ? null : LocalDate.parse(dateString);
+    }
+
+    private LocalTime getTime(HttpServletRequest request, String paramName) {
+        String timeString = request.getParameter(paramName);
+        return (timeString == null || timeString.isEmpty()) ? null : LocalTime.parse(timeString);
     }
 }

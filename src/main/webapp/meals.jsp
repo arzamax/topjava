@@ -13,12 +13,46 @@
         .exceeded {
             color: red;
         }
+
+        .inline-block {
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
 <section>
     <h3><a href="index.html">Home</a></h3>
     <h2>Meal list</h2>
+    <div>
+        <form action="meals" method="get">
+            <div class="inline-block">
+                <div>
+                    <label for="startDate">От даты:</label>
+                    <input id="startDate" type="date" name="startDate" value="${param.startDate}">
+                </div>
+                <div>
+                    <label for="endDate">До даты:</label>
+                    <input id="endDate" type="date" name="endDate" value="${param.endDate}">
+                </div>
+            </div>
+            <div class="inline-block">
+                <div>
+                    <label for="startTime">От времени:</label>
+                    <input id="startTime" type="time" name="startTime" value="${param.startTime}">
+                </div>
+                <div>
+                    <label for="endTime">До времени:</label>
+                    <input id="endTime" type="time" name="endTime" value="${param.endTime}">
+                </div>
+            </div>
+            <div>
+                <input type="submit" value="Фильтровать">
+            </div>
+        </form>
+        <form action="meals" method="get">
+            <input type="submit" value="Очистить фильтр">
+        </form>
+    </div>
     <a href="meals?action=create">Add Meal</a>
     <hr/>
     <table border="1" cellpadding="8" cellspacing="0">
