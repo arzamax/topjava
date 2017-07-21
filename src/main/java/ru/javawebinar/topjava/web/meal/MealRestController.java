@@ -21,12 +21,18 @@ public class MealRestController {
     @Autowired
     private MealService service;
 
-    public List<MealWithExceed> getAll(LocalDate startDate, LocalDate endDate,
+    public List<MealWithExceed> getFiltered(LocalDate startDate, LocalDate endDate,
                                        LocalTime startTime, LocalTime endTime) {
-        log.info("getAll: startDate {}, endDate {}, startTime {}, endTime {}", startDate, endDate, startTime, endTime);
-        return MealsUtil.getFilteredWithExceeded(service.getAll(AuthorizedUser.getId()),
+        log.info("getFiltered: startDate {}, endDate {}, startTime {}, endTime {}", startDate, endDate, startTime, endTime);
+        return MealsUtil.getWithExceeded(service.getFiltered(AuthorizedUser.getId(),
                 (startDate == null) ? LocalDate.MIN : startDate, (endDate == null) ? LocalDate.MAX : endDate,
-                (startTime == null) ? LocalTime.MIN : startTime, (endTime == null) ? LocalTime.MAX : endTime,
+                (startTime == null) ? LocalTime.MIN : startTime, (endTime == null) ? LocalTime.MAX : endTime),
+                MealsUtil.DEFAULT_CALORIES_PER_DAY);
+    }
+
+    public List<MealWithExceed> getAll() {
+        log.info("getAll");
+        return MealsUtil.getWithExceeded(service.getAll(AuthorizedUser.getId()),
                 MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 

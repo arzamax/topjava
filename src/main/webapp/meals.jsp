@@ -25,6 +25,7 @@
     <h2>Meal list</h2>
     <div>
         <form action="meals" method="get">
+            <input type="hidden" name="action" value="filter">
             <div class="inline-block">
                 <div>
                     <label for="startDate">От даты:</label>
