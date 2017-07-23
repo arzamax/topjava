@@ -18,19 +18,11 @@ public class Meal extends BaseEntity{
     }
 
     public Meal(Integer id, LocalDateTime dateTime, String description, int calories, int userId) {
-        this.id = id;
+        super(id);
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
         this.userId = userId;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public LocalDateTime getDateTime() {

@@ -24,9 +24,9 @@ public class MealRestController {
     public List<MealWithExceed> getFiltered(LocalDate startDate, LocalDate endDate,
                                        LocalTime startTime, LocalTime endTime) {
         log.info("getFiltered: startDate {}, endDate {}, startTime {}, endTime {}", startDate, endDate, startTime, endTime);
-        return MealsUtil.getWithExceeded(service.getFiltered(AuthorizedUser.getId(),
-                (startDate == null) ? LocalDate.MIN : startDate, (endDate == null) ? LocalDate.MAX : endDate,
-                (startTime == null) ? LocalTime.MIN : startTime, (endTime == null) ? LocalTime.MAX : endTime),
+        return MealsUtil.getFilteredWithExceeded(service.getFilteredByDate(AuthorizedUser.getId(),
+                (startDate == null) ? LocalDate.MIN : startDate, (endDate == null) ? LocalDate.MAX : endDate),
+                (startTime == null) ? LocalTime.MIN : startTime, (endTime == null) ? LocalTime.MAX : endTime,
                 MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 
