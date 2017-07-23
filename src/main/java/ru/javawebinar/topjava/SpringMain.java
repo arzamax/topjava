@@ -2,10 +2,12 @@ package ru.javawebinar.topjava;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 import ru.javawebinar.topjava.web.user.AdminRestController;
 import ru.javawebinar.topjava.web.user.ProfileRestController;
@@ -25,6 +27,8 @@ public class SpringMain {
             MealRestController mealRestController = appCtx.getBean(MealRestController.class);
             System.out.println("Meals count (userId=1):" + mealRestController.getAll().size());
 
+            //удаляем чужую еду
+            mealRestController.delete(7);
         }
     }
 }

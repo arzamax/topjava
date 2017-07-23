@@ -6,6 +6,7 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.util.ValidationUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -14,39 +15,33 @@ import java.util.List;
 
 @Service
 public class MealServiceImpl implements MealService {
-    private final static String EXCEPTION_FORMAT = "Meal with mealId=%d not found for userId=%d";
+    private final static String EXCEPTION_FORMAT = "mealId=%d, userId=%d";
 
     @Autowired
     private MealRepository repository;
 
     @Override
     public Meal save(Meal meal, int userId) {
+        ValidationUtil.checkNew(meal);
         return repository.save(meal, userId);
     }
 
     @Override
     public void delete(int mealId, int userId) throws NotFoundException {
-        if (!repository.delete(mealId, userId)) {
-            throw new NotFoundException(String.format(EXCEPTION_FORMAT, mealId, userId));
-        }
+        ValidationUtil.checkNotFound(repository.delete(mealId, userId),
+                String.format(EXCEPTION_FORMAT, mealId, userId));
     }
 
     @Override
     public Meal get(int mealId, int userId) throws NotFoundException {
-        Meal meal = repository.get(mealId, userId);
-        if (meal == null) {
-            throw new NotFoundException(String.format(EXCEPTION_FORMAT, mealId, userId));
-        }
-        return meal;
+        return ValidationUtil.checkNotFound(repository.get(mealId, userId),
+                String.format(EXCEPTION_FORMAT, mealId, userId));
     }
 
     @Override
     public Meal update(Meal meal, int userId) throws NotFoundException {
-        Meal savedMeal = repository.save(meal, userId);
-        if (savedMeal == null) {
-            throw new NotFoundException(String.format(EXCEPTION_FORMAT, meal.getId(), userId));
-        }
-        return savedMeal;
+        return ValidationUtil.checkNotFound(repository.save(meal, userId),
+                String.format(EXCEPTION_FORMAT, meal.getId(), userId));
     }
 
     @Override
