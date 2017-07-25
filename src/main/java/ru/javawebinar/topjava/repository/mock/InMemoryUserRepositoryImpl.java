@@ -10,6 +10,7 @@ import ru.javawebinar.topjava.repository.UserRepository;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Repository
 public class InMemoryUserRepositoryImpl implements UserRepository {
@@ -21,6 +22,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     public InMemoryUserRepositoryImpl() {
         this.save(new User(null, "Vasya", "Vasya@vasya.vasya","Vasya", Role.ROLE_USER));
         this.save(new User(null, "Polina", "Polina@polina.polina","Polina", Role.ROLE_USER));
+        this.save(new User(null, "Vasya", "Vasya@vasya.vasya","Vasya", Role.ROLE_USER));
     }
 
     @Override
@@ -48,9 +50,9 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getAll() {
         log.info("getAll");
-        List<User> users = new ArrayList<>(repository.values());
-        users.sort(Comparator.comparing(User::getName).thenComparing(User::getId));
-        return users;
+        return repository.values().stream()
+                .sorted(Comparator.comparing(User::getName).thenComparing(User::getId))
+                .collect(Collectors.toList());
     }
 
     @Override
