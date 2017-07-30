@@ -43,6 +43,28 @@ public class Meal extends BaseEntity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Meal meal = (Meal) o;
+
+        if (calories != meal.calories) return false;
+        if (!dateTime.equals(meal.dateTime)) return false;
+        return description.equals(meal.description);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + dateTime.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + calories;
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Meal{" +
                 "id=" + id +
