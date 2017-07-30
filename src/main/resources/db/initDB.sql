@@ -34,4 +34,7 @@ CREATE TABLE user_meals
   user_id    INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX user_datetime_idx ON user_meals (user_id, date_time);
+CREATE INDEX meal_datetime_idx ON user_meals (date_time);
+-- CREATE UNIQUE INDEX user_datetime_idx ON user_meals (user_id, date_time);
+
+-- SET enable_seqscan = OFF;
