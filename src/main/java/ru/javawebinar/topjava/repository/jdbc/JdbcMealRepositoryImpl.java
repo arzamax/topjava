@@ -22,12 +22,12 @@ import java.util.List;
 @Repository
 public class JdbcMealRepositoryImpl implements MealRepository {
 
-    private static final RowMapper<Meal> ROW_MAPPER =
-            (resultSet, i) -> new Meal(
-                    resultSet.getInt("id"),
-                    resultSet.getTimestamp("date_time").toLocalDateTime(),
-                    resultSet.getString("description"),
-                    resultSet.getInt("calories"));
+    private static final BeanPropertyRowMapper<Meal> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Meal.class);
+//            (resultSet, i) -> new Meal(
+//                    resultSet.getInt("id"),
+//                    resultSet.getTimestamp("date_time").toLocalDateTime(),
+//                    resultSet.getString("description"),
+//                    resultSet.getInt("calories"));
 
     private final JdbcTemplate jdbcTemplate;
 
