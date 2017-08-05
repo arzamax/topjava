@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
  * @param <T> : Bean type
  */
 public class BeanMatcher<T> {
+    private Equality<T> equality;
+
     public interface Equality<T> {
         boolean areEqual(T expected, T actual);
     }
-
-    private Equality<T> equality;
 
     public BeanMatcher() {
         this((T expected, T actual) -> expected == actual || String.valueOf(expected).equals(String.valueOf(actual)));
