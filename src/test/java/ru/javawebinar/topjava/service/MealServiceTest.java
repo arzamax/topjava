@@ -62,7 +62,11 @@ public class MealServiceTest {
 
     @AfterClass
     public static void testsDuration() {
-        testDurations.forEach((k, v) -> log.info("Test method:{}, time={}ms", k, v));
+        log.info("------------------------------------------------");
+        log.info("-------------------T E S T S--------------------");
+        log.info("------------------------------------------------");
+        testDurations.forEach((k, v) -> log.info("Method: {} time={}ms", String.format("%1$-20s", k), v));
+        log.info("------------------------------------------------");
     }
 
     @Test
