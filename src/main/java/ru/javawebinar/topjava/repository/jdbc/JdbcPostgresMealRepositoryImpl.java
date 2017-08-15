@@ -16,7 +16,7 @@ import java.util.List;
 
 @Repository
 @Profile(Profiles.POSTGRES_DB)
-public class JdbcPostgresMealRepositoryImpl extends JdbcMealRepositoryImpl {
+public class JdbcPostgresMealRepositoryImpl extends JdbcMealRepositoryImpl<LocalDateTime> {
 
     public JdbcPostgresMealRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         super(dataSource, jdbcTemplate, namedParameterJdbcTemplate);

@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public abstract class JdbcMealRepositoryImpl implements MealRepository {
+public abstract class JdbcMealRepositoryImpl<T> implements MealRepository {
 
     private static final RowMapper<Meal> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Meal.class);
 
@@ -86,5 +86,5 @@ public abstract class JdbcMealRepositoryImpl implements MealRepository {
                 ROW_MAPPER, userId, getDateTimeQueryParam(startDate), getDateTimeQueryParam(endDate));
     }
 
-    protected abstract Object getDateTimeQueryParam(LocalDateTime dateTime);
+    protected abstract T getDateTimeQueryParam(LocalDateTime dateTime);
 }

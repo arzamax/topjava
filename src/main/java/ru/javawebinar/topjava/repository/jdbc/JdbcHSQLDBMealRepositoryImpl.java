@@ -16,7 +16,7 @@ import java.util.List;
 
 @Repository
 @Profile(Profiles.HSQL_DB)
-public class JdbcHSQLDBMealRepositoryImpl extends JdbcMealRepositoryImpl {
+public class JdbcHSQLDBMealRepositoryImpl extends JdbcMealRepositoryImpl<Timestamp> {
 
     public JdbcHSQLDBMealRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         super(dataSource, jdbcTemplate, namedParameterJdbcTemplate);
