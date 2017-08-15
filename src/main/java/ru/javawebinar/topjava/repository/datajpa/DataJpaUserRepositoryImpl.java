@@ -42,10 +42,7 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public User getWithMeals(int id) {
-        User user = this.get(id);
-        user.getMeals().size();
-        return user;
+        return crudRepository.findOneWithMeals(id);
     }
 }

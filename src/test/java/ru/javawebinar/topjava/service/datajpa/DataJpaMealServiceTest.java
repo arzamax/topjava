@@ -22,7 +22,7 @@ public class DataJpaMealServiceTest extends MealServiceTest {
     }
 
     @Test
-    public void testGetWithUserNotFound() throws Exception {
+    public void testGetWithUserWrongUser() throws Exception {
         thrown.expect(NotFoundException.class);
         service.getWithUser(ADMIN_MEAL_ID, USER_ID);
     }

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
+@Transactional(readOnly = true)
 public class DataJpaMealRepositoryImpl implements MealRepository {
 
     private CrudMealRepository mealRepository;
@@ -23,6 +24,7 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
     }
 
     @Override
+    @Transactional
     public Meal save(Meal meal, int userId) {
         if (!meal.isNew() && get(meal.getId(), userId) == null) {
             return null;
@@ -32,6 +34,7 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
     }
 
     @Override
+    @Transactional
     public boolean delete(int id, int userId) {
         return mealRepository.delete(id, userId) != 0;
     }
@@ -53,14 +56,7 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Meal getWithUser(int id, int userId) {
-        Meal meal = this.get(id, userId);
-        if (meal == null) {
-            return null;
-        } else {
-            meal.getUser().getEmail();
-            return meal;
-        }
+        return mealRepository.findOneWithUser(id, userId);
     }
 }

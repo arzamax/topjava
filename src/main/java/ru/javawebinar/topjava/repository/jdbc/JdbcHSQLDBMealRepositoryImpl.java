@@ -23,18 +23,7 @@ public class JdbcHSQLDBMealRepositoryImpl extends JdbcMealRepositoryImpl {
     }
 
     @Override
-    public Meal save(Meal meal, int userId) {
-        MapSqlParameterSource map = new MapSqlParameterSource()
-                .addValue("id", meal.getId())
-                .addValue("description", meal.getDescription())
-                .addValue("calories", meal.getCalories())
-                .addValue("date_time", Timestamp.valueOf(meal.getDateTime()))
-                .addValue("user_id", userId);
-        return super.save(meal, map);
-    }
-
-    @Override
-    public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
-        return super.getBetween(userId, Timestamp.valueOf(startDate), Timestamp.valueOf(endDate));
+    protected Timestamp getDateTimeQueryParam(LocalDateTime dateTime) {
+        return Timestamp.valueOf(dateTime);
     }
 }
