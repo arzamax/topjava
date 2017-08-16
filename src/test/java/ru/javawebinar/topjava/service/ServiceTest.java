@@ -52,5 +52,6 @@ public abstract class ServiceTest {
                 "\n--------------------------------------\n" +
                 results +
                 "--------------------------------------\n");
+        results = new StringBuilder();
     }
 }
