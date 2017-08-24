@@ -4,8 +4,11 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.DataAccessException;
+import org.springframework.test.context.ActiveProfiles;
 import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
@@ -27,14 +30,14 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Autowired
     private Environment environment;
 
-    @Autowired(required = false)
-    protected JpaUtil jpaUtil;
+    @Autowired
+    private ApplicationContext context;
 
     @Before
     public void setUp() throws Exception {
         service.evictCache();
-        if (jpaUtil != null) {
-            jpaUtil.clear2ndLevelHibernateCache();
+        if (environment.acceptsProfiles(Profiles.JPA, Profiles.DATAJPA)) {
+            context.getBean(JpaUtil.class).clear2ndLevelHibernateCache();
         }
     }
 
