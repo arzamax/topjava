@@ -1,6 +1,6 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a3090cdac212404d80d8d289dbc61870)](https://www.codacy.com/app/javawebinar/topjava)
-[![Build Status](https://travis-ci.org/JavaWebinar/topjava.svg?branch=master)](https://travis-ci.org/JavaWebinar/topjava)
-[![Dependency Status](https://dependencyci.com/github/JavaWebinar/topjava/badge)](https://dependencyci.com/github/JavaWebinar/topjava)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d7e7e051e4024bcd967389bc244957a2)](https://www.codacy.com/app/shuto4ka/topjava?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=shuto4ka/topjava&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/shuto4ka/topjava.svg?branch=master)](https://travis-ci.org/shuto4ka/topjava)
+[![VersionEye](https://www.versioneye.com/user/projects/59a6a2300fb24f003d09cee9/badge.svg)](https://www.versioneye.com/user/projects/59a6a2300fb24f003d09cee9)
 
 Java Enterprise Online Project 
 ===============================
