@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static ru.javawebinar.topjava.MealTestData.MEAL1;
 import static ru.javawebinar.topjava.UserTestData.USER;
+import static ru.javawebinar.topjava.UserTestData.USER_ID;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
 public class RootControllerTest extends AbstractControllerTest {
@@ -22,7 +23,7 @@ public class RootControllerTest extends AbstractControllerTest {
                 .andExpect(model().attribute("users", hasSize(2)))
                 .andExpect(model().attribute("users", hasItem(
                         allOf(
-                                hasProperty("id", is(START_SEQ)),
+                                hasProperty("id", is(USER_ID)),
                                 hasProperty("name", is(USER.getName()))
                         )
                 )));

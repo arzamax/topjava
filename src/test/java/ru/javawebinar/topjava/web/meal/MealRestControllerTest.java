@@ -13,6 +13,8 @@ import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +28,6 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
 public class MealRestControllerTest extends AbstractControllerTest {
     private static final String REST_URL = MealRestController.REST_URL + "/";
-    private static final BeanMatcher<MealWithExceed> MATCHER_WITH_EXCEED = BeanMatcher.of(MealWithExceed.class);
 
     @Autowired
     protected MealService mealService;
@@ -69,12 +70,28 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetBetween() throws Exception {
-        LocalDate date = LocalDate.of(2015, Month.MAY, 30);
-        mockMvc.perform(get(REST_URL + "?startDate=" + date + "&endDate=" + date))
+        LocalDateTime startDateTime = LocalDateTime.of(2015, Month.MAY, 30, 7, 0);
+        LocalDateTime endDateTime = LocalDateTime.of(2015, Month.MAY, 31, 11, 0);
+        mockMvc.perform(get(REST_URL + "?startDateTime=" + startDateTime + "&endDateTime=" + endDateTime))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(
+                        MealsUtil.createWithExceed(MEAL4, true),
+                        MealsUtil.createWithExceed(MEAL1, false))
+                );
+    }
+
+    @Test
+    public void testGetAll() throws Exception {
+        mockMvc.perform(get(REST_URL))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(
+                        MealsUtil.createWithExceed(MEAL6, true),
+                        MealsUtil.createWithExceed(MEAL5, true),
+                        MealsUtil.createWithExceed(MEAL4, true),
                         MealsUtil.createWithExceed(MEAL3, false),
                         MealsUtil.createWithExceed(MEAL2, false),
                         MealsUtil.createWithExceed(MEAL1, false))
@@ -84,12 +101,12 @@ public class MealRestControllerTest extends AbstractControllerTest {
     @Test
     public void testGetBetweenCustomFormatter() throws Exception {
         LocalDate date = LocalDate.of(2015, Month.MAY, 30);
-        mockMvc.perform(get(REST_URL + "customFormatter?startDate=" + date + "&endDate=" + date))
+        LocalTime endTime = LocalTime.of(14, 0);
+        mockMvc.perform(get(REST_URL + "customFormatter?startDate=" + date + "&endDate=" + date + "&endTime=" + endTime))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(
-                        MealsUtil.createWithExceed(MEAL3, false),
                         MealsUtil.createWithExceed(MEAL2, false),
                         MealsUtil.createWithExceed(MEAL1, false))
                 );

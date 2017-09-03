@@ -4,13 +4,17 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.formatter.CustomDateTimeFormat;
 import ru.javawebinar.topjava.formatter.CustomDateTimeFormat.Type;
 
+import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -33,17 +37,30 @@ public class MealRestController extends AbstractMealController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Meal create(@RequestBody Meal meal) {
-        return super.create(meal);
+    public ResponseEntity<Meal> createWithLocation(@RequestBody Meal meal) {
+        Meal created = super.create(meal);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+
+        return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<MealWithExceed> getBetween(
-            @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
-            @RequestParam(value = "startTime", required = false) @DateTimeFormat(iso = ISO.TIME) LocalTime startTime,
-            @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate,
-            @RequestParam(value = "endTime", required = false) @DateTimeFormat(iso = ISO.TIME) LocalTime endTime) {
-        return super.getBetween(startDate, startTime, endDate, endTime);
+            @RequestParam(value = "startDateTime", required = false)
+            @DateTimeFormat(iso = ISO.DATE_TIME)
+                    LocalDateTime startDateTime,
+            @RequestParam(value = "endDateTime", required = false)
+            @DateTimeFormat(iso = ISO.DATE_TIME)
+                    LocalDateTime endDateTime) {
+        LocalDate startDate = (startDateTime == null) ? null : startDateTime.toLocalDate();
+        LocalTime startTime = (startDateTime == null) ? null : startDateTime.toLocalTime();
+        LocalDate endDate = (endDateTime == null) ? null : endDateTime.toLocalDate();
+        LocalTime endTime = (endDateTime == null) ? null : endDateTime.toLocalTime();
+        return (startDate == null && startTime == null && endDate == null && endTime == null)
+                ? super.getAll()
+                : super.getBetween(startDate, startTime, endDate, endTime);
     }
 
     @GetMapping(value = "/customFormatter", produces = MediaType.APPLICATION_JSON_VALUE)
