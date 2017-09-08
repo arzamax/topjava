@@ -45,7 +45,6 @@ function updateTable() {
 function updateTableWithFilter(params) {
     $.get({
         url: ajaxUrl + "filter",
-        type: "GET",
         data: params,
         success: function (data) {
             datatableApi.clear().rows.add(data).draw();

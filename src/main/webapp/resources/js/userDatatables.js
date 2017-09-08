@@ -39,4 +39,18 @@ $(function () {
         ]
     });
     makeEditable();
+
+    $(".enable-checkbox").change(function () {
+        var checkbox = $(this);
+        var tr = checkbox.parent().parent();
+        $.ajax({
+            type: "POST",
+            url: ajaxUrl + tr.attr("id"),
+            data: "enabled=" + checkbox.is(':checked'),
+            success: function () {
+                successNoty("Saved");
+                tr.attr("class", checkbox.is(':checked') ? "" : "disabled");
+            }
+        });
+    });
 });
