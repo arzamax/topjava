@@ -33,8 +33,23 @@ function deleteRow(id) {
 }
 
 function updateTable() {
-    $.get(ajaxUrl, function (data) {
-        datatableApi.clear().rows.add(data).draw();
+    if (typeof filterParams === "undefined") {
+        $.get(ajaxUrl, function (data) {
+            datatableApi.clear().rows.add(data).draw();
+        });
+    } else {
+        updateTableWithFilter(filterParams);
+    }
+}
+
+function updateTableWithFilter(params) {
+    $.get({
+        url: ajaxUrl + "filter",
+        type: "GET",
+        data: params,
+        success: function (data) {
+            datatableApi.clear().rows.add(data).draw();
+        }
     });
 }
 

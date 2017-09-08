@@ -1,5 +1,6 @@
 var ajaxUrl = "ajax/meals/";
 var datatableApi;
+var filterParams;
 
 // $(document).ready(function () {
 $(function () {
@@ -33,4 +34,15 @@ $(function () {
         ]
     });
     makeEditable();
+
+    $("#dateTimeFilter").submit(function () {
+        filterParams = $(this).serialize();
+        updateTable();
+        return false;
+    });
+    $("#resetFilter").click(function () {
+        filterParams = undefined;
+        updateTable();
+    });
 });
+
