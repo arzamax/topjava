@@ -20,7 +20,7 @@ function updateRow(id) {
     $("#modalTitle").html(i18n["editTitle"]);
     $.get(ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
-            form.find("input[name='" + key + "']").val(value);
+            form.find("input[name='" + key + "']").val(key === "dateTime" ? convertDateTimeToString(value) : value);
         });
         $('#editRow').modal();
     });
@@ -45,7 +45,7 @@ function save() {
     $.ajax({
         type: "POST",
         url: ajaxUrl,
-        data: form.serialize(),
+        data: serializeWithDateTimeFormat(form),
         success: function () {
             $("#editRow").modal("hide");
             updateTable();
@@ -94,4 +94,19 @@ function renderDeleteBtn(data, type, row) {
         return "<a onclick='deleteRow(" + row.id + ");'>" +
             "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
     }
+}
+
+function convertDateTimeToString(dateTime) {
+    var dateTimeStr = dateTime.toString();
+    return dateTimeStr.replace("T", " ").substr(0, dateTimeStr.length - 3);
+}
+
+function serializeWithDateTimeFormat(form) {
+    var array = form.serializeArray();
+    for (var i = 0; i < array.length; i++) {
+        if (array[i].name === "dateTime") {
+            array[i].value = array[i].value.replace(" ", "T");
+        }
+    }
+    return $.param(array);
 }
