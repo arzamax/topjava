@@ -2,7 +2,9 @@ package ru.javawebinar.topjava.web.meal;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.transaction.TestTransaction;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
@@ -82,6 +84,19 @@ public class MealRestControllerTest extends AbstractControllerTest {
         assertEquals(updated, service.get(MEAL1_ID, START_SEQ));
     }
 
+    @Test(expected = DataIntegrityViolationException.class)
+    public void testUpdateDuplicated() throws Exception {
+        Meal updated = getUpdated();
+        updated.setDateTime(MEAL2.getDateTime());
+        mockMvc.perform(put(REST_URL + MEAL1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updated))
+                .with(userHttpBasic(USER)));
+
+        TestTransaction.flagForCommit();
+        TestTransaction.end();
+    }
+
     @Test
     public void testCreate() throws Exception {
         Meal created = getCreated();
@@ -95,6 +110,18 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
         MATCHER.assertEquals(created, returned);
         MATCHER.assertListEquals(Arrays.asList(ADMIN_MEAL2, created, ADMIN_MEAL1), service.getAll(ADMIN_ID));
+    }
+
+    @Test
+    public void testCreateInvalid() throws Exception {
+        Meal created = getCreated();
+        created.setDateTime(null);
+        mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(created))
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print());
     }
 
     @Test

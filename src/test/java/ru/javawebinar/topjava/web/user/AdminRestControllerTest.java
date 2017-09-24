@@ -1,7 +1,10 @@
 package ru.javawebinar.topjava.web.user;
 
 import org.junit.Test;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.transaction.TestTransaction;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.javawebinar.topjava.TestUtil;
 import ru.javawebinar.topjava.model.Role;
@@ -107,6 +110,30 @@ public class AdminRestControllerTest extends AbstractControllerTest {
 
         MATCHER.assertEquals(NEW_USER, returned);
         MATCHER.assertListEquals(Arrays.asList(ADMIN, NEW_USER, USER), userService.getAll());
+    }
+
+    @Test
+    public void testCreateInvalid() throws Exception {
+        String invalidData = "{\"email\":\"new@gmail.com\",\"password\":\"password\",\"enabled\":true,\"registered\":\"2017-09-20T09:12:40.953+0000\",\"roles\":[\"ROLE_USER\",\"ROLE_ADMIN\"],\"caloriesPerDay\":2300}";
+        mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(invalidData))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print());
+    }
+
+    @Test(expected = DataIntegrityViolationException.class)
+    public void testCreateDuplicatedEmail() throws Exception {
+        String invalidData = "{\"name\":\"New\",\"email\":\"admin@gmail.com\",\"password\":\"password\",\"enabled\":true,\"registered\":\"2017-09-20T09:12:40.953+0000\",\"roles\":[\"ROLE_USER\",\"ROLE_ADMIN\"],\"caloriesPerDay\":2300}";
+        mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(invalidData))
+                .andDo(print());
+
+        TestTransaction.flagForCommit();
+        TestTransaction.end();
     }
 
     @Test
