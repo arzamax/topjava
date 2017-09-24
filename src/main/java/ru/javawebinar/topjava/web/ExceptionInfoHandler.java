@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
@@ -7,6 +8,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.util.ValidationUtil;
 import ru.javawebinar.topjava.util.exception.ErrorInfo;
@@ -31,14 +34,23 @@ public class ExceptionInfoHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseBody
     public ErrorInfo handleError(HttpServletRequest req, DataIntegrityViolationException e) {
-        return logAndGetErrorInfo(req, e, true);
+        if (e.getCause() != null && e.getCause() instanceof ConstraintViolationException) {
+            ConstraintViolationException cause = (ConstraintViolationException) e.getCause();
+            return new ErrorInfo(req.getRequestURL(), cause.getClass().getSimpleName(),
+                    cause.getConstraintName().equals("users_unique_email_idx") ? "User with this email already exists"
+                            : "Meal with this dateTime already exists");
+        } else {
+            return logAndGetErrorInfo(req, e, true);
+        }
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler(BindException.class)
+    @ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})
     @ResponseBody
-    public ErrorInfo handleError(HttpServletRequest req, BindException e) {
-        String message = ValidationUtil.getErrorResponse(e.getBindingResult()).getBody();
+    public ErrorInfo handleBindError(HttpServletRequest req, Exception e) {
+        BindingResult bindingResult = (e instanceof BindException) ? ((BindException) e).getBindingResult()
+                : ((MethodArgumentNotValidException) e).getBindingResult();
+        String message = ValidationUtil.getErrorResponse(bindingResult).getBody();
         return new ErrorInfo(req.getRequestURL(), e.getClass().getSimpleName(), message);
     }
 
